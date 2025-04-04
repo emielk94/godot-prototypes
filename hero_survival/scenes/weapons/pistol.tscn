@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://buj8xmuwil0u4"]
+
+[ext_resource type="Script" path="res://pistol.gd" id="1_r7mni"]
+
+[node name="pistol" type="Node2D"]
+script = ExtResource("1_r7mni")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
