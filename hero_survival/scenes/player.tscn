@@ -1,10 +1,32 @@
-[gd_scene load_steps=11 format=3 uid="uid://braik6pjguq80"]
+[gd_scene load_steps=18 format=3 uid="uid://braik6pjguq80"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_vhtmd"]
+[ext_resource type="Texture2D" uid="uid://c3gonk7sffflp" path="res://img/idle.png" id="2_ciod1"]
 [ext_resource type="Texture2D" uid="uid://cvoaiayiyok2x" path="res://img/walk.png" id="2_j7am2"]
+[ext_resource type="PackedScene" uid="uid://buj8xmuwil0u4" path="res://scenes/weapons/pistol.tscn" id="3_0d2da"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvw40"]
 size = Vector2(17, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktyqx"]
+atlas = ExtResource("2_ciod1")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyn88"]
+atlas = ExtResource("2_ciod1")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y8eb"]
+atlas = ExtResource("2_ciod1")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pga61"]
+atlas = ExtResource("2_ciod1")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gd3au"]
+atlas = ExtResource("2_ciod1")
+region = Rect2(0, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t37bb"]
 atlas = ExtResource("2_j7am2")
@@ -32,6 +54,26 @@ region = Rect2(64, 64, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ixans"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktyqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyn88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0y8eb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pga61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gd3au")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t37bb")
@@ -66,3 +108,7 @@ shape = SubResource("RectangleShape2D_bvw40")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ixans")
 animation = &"walk"
+
+[node name="gun_pos" type="Node2D" parent="."]
+
+[node name="pistol" parent="gun_pos" instance=ExtResource("3_0d2da")]
