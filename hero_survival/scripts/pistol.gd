@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 func shoot():
 	if can_shoot:
 		can_shoot = false
+		fire_cd_timer.wait_time = fire_rate
 		fire_cd_timer.start()
 		
 		play_audio()
