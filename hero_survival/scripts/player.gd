@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var gun_pos = $gun_pos
 @onready var gun = $gun_pos.get_child(0)
 var pistol = preload("res://scenes/weapons/pistol.tscn")
+var shotgun = preload("res://scenes/weapons/shotgun.tscn")
 
 const speed = 300.0
 const JUMP_VELOCITY = -400.0
@@ -12,7 +13,7 @@ var inventory = []
 
 func _ready() -> void:
 	inventory.append(pistol)
-	inventory.append(pistol)
+	inventory.append(shotgun)
 	
 func _process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()

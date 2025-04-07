@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2hkn56haw8jq"]
+
+[ext_resource type="Script" path="res://scripts/shotgun.gd" id="1_je5py"]
+[ext_resource type="Texture2D" uid="uid://cdxp5n0glh7r7" path="res://img/weapons.png" id="2_yqd8m"]
+
+[node name="shotgun" type="Node2D"]
+script = ExtResource("1_je5py")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yqd8m")
+region_enabled = true
+region_rect = Rect2(30.6202, 49.9997, 28.3774, 15.0476)
+
+[node name="R1" type="RayCast2D" parent="."]
+
+[node name="R2" type="RayCast2D" parent="."]
+
+[node name="R3" type="RayCast2D" parent="."]
+
+[node name="R4" type="RayCast2D" parent="."]
+
+[node name="R5" type="RayCast2D" parent="."]
+
+[node name="fire_cd_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="fire_cd_timer" to="." method="_on_fire_cd_timer_timeout"]
