@@ -9,7 +9,9 @@ var gunshot = preload("res://sfx/gunshot.ogg")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	damage = 10
 	draw_offset = 30 # Replace with function body.
+	knockback_str = 200
 	fire_rate = 0.5
 	fire_cd_timer.wait_time = fire_rate
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,6 +41,7 @@ func shoot():
 			var collider = raycast.get_collider()
 			if collider && collider.is_in_group("enemies"):
 				collider.take_damage(damage)
+				collider.apply_knockback(knockback_str)
 
 func play_audio():
 	var audio_player = AudioStreamPlayer2D.new()

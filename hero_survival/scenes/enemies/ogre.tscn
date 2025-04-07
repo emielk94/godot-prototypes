@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyfcikebhthoe"]
+
+[ext_resource type="Texture2D" uid="uid://ba30fyns8wjrq" path="res://sprites/enemies/ogre/Ogre_walk.png" id="1_fiwke"]
+[ext_resource type="Script" path="res://scripts/enemies/ogre.gd" id="1_yqss7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cahga"]
+atlas = ExtResource("1_fiwke")
+region = Rect2(0, 68, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnlgp"]
+atlas = ExtResource("1_fiwke")
+region = Rect2(64, 68, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rd77n"]
+atlas = ExtResource("1_fiwke")
+region = Rect2(128, 68, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6vcv"]
+atlas = ExtResource("1_fiwke")
+region = Rect2(192, 68, 64, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6c3gv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cahga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnlgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rd77n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6vcv")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_muiso"]
+size = Vector2(54, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mjpq"]
+size = Vector2(25, 44)
+
+[node name="ogre" type="CharacterBody2D" groups=["enemies"]]
+script = ExtResource("1_yqss7")
+
+[node name="animsprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6c3gv")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 8)
+shape = SubResource("RectangleShape2D_muiso")
+
+[node name="melee_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="melee_hitbox"]
+position = Vector2(42.5, 8)
+shape = SubResource("RectangleShape2D_7mjpq")

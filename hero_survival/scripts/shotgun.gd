@@ -52,7 +52,7 @@ func shoot():
 				var collider = raycast.get_collider()
 				if collider && collider.is_in_group("enemies"):
 					collider.take_damage(damage)
-					collider.knockback_force += 150
+					collider.apply_knockback(knockback_str)
 
 func play_audio():
 	var audio_player = AudioStreamPlayer2D.new()

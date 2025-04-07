@@ -26,8 +26,6 @@ func _process(delta: float) -> void:
 		equip_weapon(0)
 	if Input.is_action_just_pressed("weapon_slot_2"):
 		equip_weapon(1)
-		await get_tree().process_frame
-		gun.fire_rate = 0.01
 		
 	direction = Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("shoot"):
