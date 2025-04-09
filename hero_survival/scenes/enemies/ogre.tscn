@@ -1,7 +1,28 @@
-[gd_scene load_steps=10 format=3 uid="uid://dyfcikebhthoe"]
+[gd_scene load_steps=16 format=3 uid="uid://dyfcikebhthoe"]
 
 [ext_resource type="Texture2D" uid="uid://ba30fyns8wjrq" path="res://sprites/enemies/ogre/Ogre_walk.png" id="1_fiwke"]
 [ext_resource type="Script" path="res://scripts/enemies/ogre.gd" id="1_yqss7"]
+[ext_resource type="Texture2D" uid="uid://cw0p32b581via" path="res://sprites/enemies/ogre/Ogre_attack.png" id="2_vgby1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s44jd"]
+atlas = ExtResource("2_vgby1")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwm15"]
+atlas = ExtResource("2_vgby1")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j75xv"]
+atlas = ExtResource("2_vgby1")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6kn6l"]
+atlas = ExtResource("2_vgby1")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar4o7"]
+atlas = ExtResource("2_vgby1")
+region = Rect2(512, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cahga"]
 atlas = ExtResource("1_fiwke")
@@ -21,6 +42,26 @@ region = Rect2(192, 68, 64, 62)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6c3gv"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s44jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwm15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j75xv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6kn6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ar4o7")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cahga")
@@ -46,11 +87,13 @@ size = Vector2(54, 44)
 size = Vector2(25, 44)
 
 [node name="ogre" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_yqss7")
 
 [node name="animsprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6c3gv")
-animation = &"walk"
+animation = &"attack"
 autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -58,7 +101,12 @@ position = Vector2(5, 8)
 shape = SubResource("RectangleShape2D_muiso")
 
 [node name="melee_hitbox" type="Area2D" parent="."]
+position = Vector2(-34, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="melee_hitbox"]
-position = Vector2(42.5, 8)
 shape = SubResource("RectangleShape2D_7mjpq")
+
+[connection signal="animation_finished" from="animsprite2D" to="." method="_on_animsprite_2d_animation_finished"]
+[connection signal="frame_changed" from="animsprite2D" to="." method="_on_animsprite_2d_frame_changed"]
+[connection signal="body_entered" from="melee_hitbox" to="." method="_on_melee_hitbox_body_entered"]
+[connection signal="body_exited" from="melee_hitbox" to="." method="_on_melee_hitbox_body_exited"]

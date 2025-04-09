@@ -12,14 +12,19 @@ region_enabled = true
 region_rect = Rect2(30.6202, 49.9997, 28.3774, 15.0476)
 
 [node name="R1" type="RayCast2D" parent="."]
+collision_mask = 2
 
 [node name="R2" type="RayCast2D" parent="."]
+collision_mask = 2
 
 [node name="R3" type="RayCast2D" parent="."]
+collision_mask = 2
 
 [node name="R4" type="RayCast2D" parent="."]
+collision_mask = 2
 
 [node name="R5" type="RayCast2D" parent="."]
+collision_mask = 2
 
 [node name="fire_cd_timer" type="Timer" parent="."]
 
