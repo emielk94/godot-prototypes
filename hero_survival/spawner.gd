@@ -1,6 +1,6 @@
 extends Node2D
 
-var ogre = preload("res://scenes/enemies/ogre.tscn")
+var enemy_scenes = {"ogre": preload("res://scenes/enemies/ogre.tscn")}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -9,12 +9,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func spawn(x,y, isRandomPos, count):
+func spawn(x,y, isRandomPos, count, enemy_type):
 	for i in range(count):
 		var xpos = randi() % 1000
 		var ypos = randi() % 1000
 		
-		var ogre_instance = ogre.instantiate()
+		var ogre_instance = enemy_scenes[enemy_type].instantiate()
 		if isRandomPos:
 			ogre_instance.position = Vector2(xpos, ypos) 
 		else:
