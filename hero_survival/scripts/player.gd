@@ -3,8 +3,10 @@ extends CharacterBody2D
 @onready var player_sprite = $AnimatedSprite2D
 @onready var gun_pos = $gun_pos
 @onready var gun = $gun_pos.get_child(0)
+
 var pistol = preload("res://scenes/weapons/pistol.tscn")
 var shotgun = preload("res://scenes/weapons/shotgun.tscn")
+var minigun = preload("res://scenes/weapons/minigun.tscn")
 
 var health = 100
 const speed = 300.0
@@ -14,7 +16,8 @@ var inventory = []
 
 func _ready() -> void:
 	inventory.append(pistol)
-	inventory.append(shotgun)
+	#inventory.append(shotgun)
+	inventory.append(minigun)
 	
 func _process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
