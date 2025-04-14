@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_vhtmd"]
 [ext_resource type="Texture2D" uid="uid://c3gonk7sffflp" path="res://sprites/player/idle.png" id="2_ciod1"]
 [ext_resource type="Texture2D" uid="uid://cvoaiayiyok2x" path="res://sprites/player/walk.png" id="2_j7am2"]
-[ext_resource type="PackedScene" uid="uid://buj8xmuwil0u4" path="res://scenes/weapons/pistol.tscn" id="3_0d2da"]
+[ext_resource type="PackedScene" uid="uid://b0mrlpbpe6bta" path="res://scenes/HUD/reload_bar.tscn" id="4_gqb81"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvw40"]
 size = Vector2(17, 33)
@@ -111,4 +111,6 @@ animation = &"walk"
 
 [node name="gun_pos" type="Node2D" parent="."]
 
-[node name="pistol" parent="gun_pos" instance=ExtResource("3_0d2da")]
+[node name="ReloadBar" parent="." instance=ExtResource("4_gqb81")]
+offset_top = -25.0
+offset_bottom = -25.0

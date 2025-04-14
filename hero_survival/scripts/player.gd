@@ -3,10 +3,19 @@ extends CharacterBody2D
 @onready var player_sprite = $AnimatedSprite2D
 @onready var gun_pos = $gun_pos
 @onready var gun = $gun_pos.get_child(0)
+@onready var reload_bar = $ReloadBar
+@onready var player = get_parent().find_child("player")
 
-var pistol = preload("res://scenes/weapons/pistol.tscn")
-var shotgun = preload("res://scenes/weapons/shotgun.tscn")
-var minigun = preload("res://scenes/weapons/minigun.tscn")
+var guns = {
+"pistol": preload("res://scenes/weapons/pistol.tscn"),
+"shotgun": preload("res://scenes/weapons/shotgun.tscn"),
+"minigun": preload("res://scenes/weapons/minigun.tscn")
+}
+
+var ammo = {
+	"pistol": {"total": 20, "remaining_bullets": 12},
+	"shotgun": {"total": 10, "remaining_bullets": 2}
+}
 
 var health = 100
 const speed = 300.0
@@ -15,9 +24,12 @@ var direction
 var inventory = []
 
 func _ready() -> void:
-	inventory.append(pistol)
-	#inventory.append(shotgun)
-	inventory.append(minigun)
+	add_weapon_to_inventory("pistol")
+	add_weapon_to_inventory("shotgun")
+	gun_pos.add_child(guns[inventory[0]].instantiate())
+	gun_pos.get_child(0).set_owner(self)
+	gun = gun_pos.get_child(0)
+	gun.remaining_bullets = ammo[gun.name]["remaining_bullets"]
 	
 func _process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
@@ -30,6 +42,8 @@ func _process(delta: float) -> void:
 		equip_weapon(0)
 	if Input.is_action_just_pressed("weapon_slot_2"):
 		equip_weapon(1)
+	if Input.is_action_just_pressed("reload"):
+		reload()
 		
 	direction = Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("shoot"):
@@ -47,6 +61,12 @@ func _process(delta: float) -> void:
 	else:
 		player_sprite.flip_h = false
 		
+func add_weapon_to_inventory(name):
+	inventory.append(name)
+	
+func reload():
+	await gun.reload()
+	
 func _physics_process(delta: float) -> void:
 	if direction:
 		velocity = direction * speed
@@ -60,9 +80,11 @@ func take_damage(damage):
 	print(health)
 	
 func equip_weapon(index):
-	gun_pos.get_child(0).queue_free()
-	await get_tree().process_frame
-	var new_weapon = inventory[index].instantiate()
-	gun_pos.add_child(new_weapon)
-	gun_pos.get_child(0).set_owner(self)
-	gun = gun_pos.get_child(0)
+	if index <= inventory.size() -1:
+		gun_pos.get_child(0).queue_free()
+		await get_tree().process_frame
+		var new_weapon = guns[inventory[index]].instantiate()
+		new_weapon.remaining_bullets = ammo[new_weapon.name]["remaining_bullets"]
+		gun_pos.add_child(new_weapon)
+		gun_pos.get_child(0).set_owner(self)
+		gun = gun_pos.get_child(0)
