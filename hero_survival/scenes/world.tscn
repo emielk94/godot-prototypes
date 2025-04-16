@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://iijr7m7febkq"]
+[gd_scene load_steps=5 format=3 uid="uid://iijr7m7febkq"]
 
 [ext_resource type="Texture2D" uid="uid://d3hv0i0t5kb72" path="res://img/1000_F_407541294_A8o5pW1SPNBIENxt6Jsttpw5o2NsIWRJ.jpg" id="1_0vff3"]
 [ext_resource type="PackedScene" uid="uid://braik6pjguq80" path="res://scenes/player.tscn" id="1_ntiox"]
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_xr0kb"]
-[ext_resource type="PackedScene" uid="uid://dyfcikebhthoe" path="res://scenes/enemies/ogre.tscn" id="3_sq5df"]
 [ext_resource type="PackedScene" uid="uid://doxwcbkvw8css" path="res://scenes/spawner.tscn" id="5_lj4x3"]
 
 [node name="world" type="Node2D"]
@@ -17,8 +16,5 @@ texture = ExtResource("1_0vff3")
 [node name="player" parent="." instance=ExtResource("1_ntiox")]
 position = Vector2(570, 310)
 scale = Vector2(2, 2)
-
-[node name="ogre" parent="." instance=ExtResource("3_sq5df")]
-position = Vector2(385, 310)
 
 [node name="spawner" parent="." instance=ExtResource("5_lj4x3")]
