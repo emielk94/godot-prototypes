@@ -14,7 +14,7 @@ var guns = {
 
 var ammo = {
 	"pistol": {"total": 20, "remaining_bullets": 12},
-	"shotgun": {"total": 10, "remaining_bullets": 2}
+	"shotgun": {"total": 20, "remaining_bullets": 5}
 }
 
 var health = 100

@@ -10,7 +10,9 @@ func _ready(): # Replace with function body.
 	range = 1000
 	damage = 15
 	knockback_str = 200
-	#particles.one_shot = true
+	clip_size = 5
+	reload_time = 2
+	reload_timer.wait_time = reload_time
 	fire_rate = 0.5
 	fire_cd_timer.wait_time = fire_rate
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,26 +35,34 @@ func _physics_process(delta):
 	
 func shoot():
 	if can_shoot:
-		can_shoot = false
-		fire_cd_timer.wait_time = fire_rate
-		fire_cd_timer.start()
-		#particles.emitting = true
-		var mouse_pos = get_global_mouse_position()
-		var direction = (mouse_pos - global_position).normalized()
-		play_audio()
+		if remaining_bullets > 0:
+			remaining_bullets -= 1
+			owner.ammo[name]["remaining_bullets"] = remaining_bullets
+			can_shoot = false
+			fire_cd_timer.wait_time = fire_rate
+			fire_cd_timer.start()
+			can_shoot = false
+			fire_cd_timer.wait_time = fire_rate
+			fire_cd_timer.start()
+			#particles.emitting = true
+			var mouse_pos = get_global_mouse_position()
+			var direction = (mouse_pos - global_position).normalized()
+			play_audio()
 		
-		for i in range(1, 5):
-			var random_angle = randf_range(-max_spread_degrees, max_spread_degrees)
-			var raycast_global_target = raycasts[i].global_position + direction.rotated(deg_to_rad(random_angle)) * 1000
-			raycasts[i].target_position = raycasts[i].to_local(raycast_global_target)
-			raycasts[i].force_raycast_update()
+			for i in range(1, 5):
+				var random_angle = randf_range(-max_spread_degrees, max_spread_degrees)
+				var raycast_global_target = raycasts[i].global_position + direction.rotated(deg_to_rad(random_angle)) * 1000
+				raycasts[i].target_position = raycasts[i].to_local(raycast_global_target)
+				raycasts[i].force_raycast_update()
 
-		for raycast in raycasts:
-			if raycast.is_colliding():
-				var collider = raycast.get_collider()
-				if collider && collider.is_in_group("enemies"):
-					collider.take_damage(damage)
-					collider.apply_knockback(knockback_str)
+			for raycast in raycasts:
+				if raycast.is_colliding():
+					var collider = raycast.get_collider()
+					if collider && collider.is_in_group("enemies"):
+						collider.take_damage(damage)
+						collider.apply_knockback(knockback_str)
+		else:
+			reload()
 
 func play_audio():
 	var audio_player = AudioStreamPlayer2D.new()
@@ -63,3 +73,17 @@ func play_audio():
 
 func _on_fire_cd_timer_timeout() -> void:
 	can_shoot = true # Replace with function body.
+
+func _on_reload_timer_timeout() -> void:
+	owner.reload_bar.set_value(reload_timer.time_left)
+	owner.reload_bar.hide() # Replace with function body.
+	var bullet_count = clip_size - remaining_bullets
+	
+	if owner.ammo[name]["total"] >= bullet_count:
+		owner.ammo[name]["total"] -= bullet_count
+		remaining_bullets = clip_size
+		owner.ammo[name]["remaining_bullets"] = remaining_bullets
+	else:
+		remaining_bullets += owner.ammo[name]["total"]
+		owner.ammo[name]["total"] = 0
+		owner.ammo[name]["remaining_bullets"] = remaining_bullets

@@ -1,6 +1,8 @@
 extends Node2D
 class_name Gun
 
+@onready var reload_timer = $reload_timer
+
 var clip_size : int= 12
 var remaining_bullets: int=0
 var reload_time : int = 3
@@ -18,3 +20,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+func reload():
+	print(owner.ammo[name]["total"] != 0)
+	print(remaining_bullets != clip_size)
+	if owner.ammo[name]["total"] != 0 and remaining_bullets != clip_size:
+		reload_timer.start()
+		print(reload_timer.owner.name)

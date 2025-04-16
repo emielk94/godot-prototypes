@@ -3,7 +3,6 @@ extends Gun
 @onready var raycast = $RayCast2D
 @onready var sprite = $sprite
 @onready var fire_cd_timer = $fire_cd
-@onready var reload_timer = $reload_timer
 
 var gunshot = preload("res://sfx/gunshot.ogg")
 
@@ -49,10 +48,6 @@ func shoot():
 					collider.apply_knockback(knockback_str)
 		else:
 			reload()
-
-func reload():
-	if owner.ammo[name]["total"] != 0 and remaining_bullets != clip_size:
-		reload_timer.start()
 	
 func play_audio():
 	var audio_player = AudioStreamPlayer2D.new()
@@ -78,4 +73,3 @@ func _on_reload_timer_timeout() -> void:
 		owner.ammo[name]["total"] = 0
 		owner.ammo[name]["remaining_bullets"] = remaining_bullets
 		
-	print(owner.ammo["pistol"])
