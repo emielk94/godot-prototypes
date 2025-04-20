@@ -14,7 +14,8 @@ var guns = {
 
 var ammo = {
 	"pistol": {"total": 20, "remaining_bullets": 12},
-	"shotgun": {"total": 20, "remaining_bullets": 5}
+	"shotgun": {"total": 20, "remaining_bullets": 5},
+	"minigun": {"total": 200, "remaining_bullets": 100}
 }
 
 var health = 100
@@ -26,6 +27,7 @@ var inventory = []
 func _ready() -> void:
 	add_weapon_to_inventory("pistol")
 	add_weapon_to_inventory("shotgun")
+	add_weapon_to_inventory("minigun")
 	gun_pos.add_child(guns[inventory[0]].instantiate())
 	gun_pos.get_child(0).set_owner(self)
 	gun = gun_pos.get_child(0)
@@ -41,7 +43,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("weapon_slot_1"):
 		equip_weapon(0)
 	if Input.is_action_just_pressed("weapon_slot_2"):
-		equip_weapon(1)
+		equip_weapon(2)
 	if Input.is_action_just_pressed("reload"):
 		reload()
 		

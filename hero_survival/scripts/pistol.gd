@@ -60,16 +60,4 @@ func _on_fire_cd_timeout() -> void:
 	can_shoot = true # Replace with function body.
 
 func _on_reload_timer_timeout() -> void:
-	owner.reload_bar.set_value(reload_timer.time_left)
-	owner.reload_bar.hide() # Replace with function body.
-	var bullet_count = clip_size - remaining_bullets
-	
-	if owner.ammo[name]["total"] >= bullet_count:
-		owner.ammo[name]["total"] -= bullet_count
-		remaining_bullets = clip_size
-		owner.ammo[name]["remaining_bullets"] = remaining_bullets
-	else:
-		remaining_bullets += owner.ammo[name]["total"]
-		owner.ammo[name]["total"] = 0
-		owner.ammo[name]["remaining_bullets"] = remaining_bullets
-		
+	finish_reload()
