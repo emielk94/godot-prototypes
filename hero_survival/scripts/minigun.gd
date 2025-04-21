@@ -53,6 +53,7 @@ func play_audio():
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.global_position = global_position
 	audio_player.stream = gunshot
+	audio_player.volume_db = -20
 	get_tree().current_scene.add_child(audio_player)
 	audio_player.play()
 
