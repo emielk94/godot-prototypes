@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var player = get_parent().find_child("player")
 @onready var melee_hitbox = $melee_hitbox
 
+var ammo_scene = preload("res://scenes/ammo.tscn")
+
 const movement_speed = 100
 const JUMP_VELOCITY = -400.0
 
@@ -44,8 +46,20 @@ func take_damage(damage):
 	hp -= damage
 	
 	if hp <= 0:
-		queue_free()
-
+		die()
+		
+func drop_item():
+	var ammo_instance = ammo_scene.instantiate()
+	ammo_instance.position = position
+	get_tree().current_scene.add_child(ammo_instance)
+	
+func die():
+	var random_number = randi() % 3
+	if random_number == 0:
+		print("drop")
+		drop_item()
+	queue_free()
+	
 func apply_knockback(knockback_value):
 	knockback_force += knockback_value
 

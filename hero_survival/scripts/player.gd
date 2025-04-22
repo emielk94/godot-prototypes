@@ -68,6 +68,11 @@ func add_weapon_to_inventory(name):
 	
 func reload():
 	await gun.reload()
+
+func add_ammo():
+	print(ammo[gun.name]["total"])
+	ammo[gun.name]["total"] += 50
+	print(ammo[gun.name]["total"])
 	
 func _physics_process(delta: float) -> void:
 	if direction:
