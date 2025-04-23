@@ -6,6 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nq3wb"]
 
 [node name="ammo" type="Node2D"]
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_ys87x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

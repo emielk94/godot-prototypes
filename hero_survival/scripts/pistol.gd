@@ -45,7 +45,7 @@ func shoot():
 				var collider = raycast.get_collider()
 				if collider && collider.is_in_group("enemies"):
 					collider.take_damage(damage)
-					collider.apply_knockback(knockback_str)
+					collider.apply_knockback(knockback_str,(owner.position - collider.position))
 		else:
 			reload()
 	

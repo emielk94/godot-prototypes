@@ -16,6 +16,7 @@ var direction : Vector2
 var already_flipped = true
 var knockback_force = 0
 var knockback_decay_speed = 30
+var knockback_direction : Vector2
 
 func _process(delta):
 	if player:
@@ -37,7 +38,7 @@ func _physics_process(delta):
 		if !is_attacking:
 			velocity = direction.normalized() * movement_speed
 	else:
-		velocity = -direction.normalized() * knockback_force
+		velocity = -knockback_direction.normalized() * knockback_force
 		knockback_force -= knockback_decay_speed
 
 	move_and_collide(velocity * delta)
@@ -60,9 +61,10 @@ func die():
 		drop_item()
 	queue_free()
 	
-func apply_knockback(knockback_value):
+func apply_knockback(knockback_value, direction):
 	knockback_force += knockback_value
-
+	knockback_direction = direction
+	
 func attack():
 	velocity = Vector2.ZERO
 	is_attacking = true
