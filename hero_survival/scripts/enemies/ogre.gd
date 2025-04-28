@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var sprite = $animsprite2D
 @onready var player = get_parent().find_child("player")
 @onready var melee_hitbox = $melee_hitbox
+@onready var dmg_num_origin = $dmg_num_origin
 
 var ammo_scene = preload("res://scenes/ammo.tscn")
 
@@ -45,6 +46,7 @@ func _physics_process(delta):
 	
 func take_damage(damage):
 	hp -= damage
+	DamageNumbers.display_number(damage, dmg_num_origin.global_position)
 	
 	if hp <= 0:
 		die()

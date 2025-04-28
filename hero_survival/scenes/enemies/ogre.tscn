@@ -106,6 +106,8 @@ position = Vector2(-34, 8)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="melee_hitbox"]
 shape = SubResource("RectangleShape2D_7mjpq")
 
+[node name="dmg_num_origin" type="Node2D" parent="."]
+
 [connection signal="animation_finished" from="animsprite2D" to="." method="_on_animsprite_2d_animation_finished"]
 [connection signal="frame_changed" from="animsprite2D" to="." method="_on_animsprite_2d_frame_changed"]
 [connection signal="body_entered" from="melee_hitbox" to="." method="_on_melee_hitbox_body_entered"]
