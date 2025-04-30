@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://db77xw38lsumk"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_edjy7"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_edjy7")
+
+[node name="ammo_label" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -48.0
+offset_right = 60.0
+offset_bottom = -25.0
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+size_flags_horizontal = 4
+size_flags_vertical = 8

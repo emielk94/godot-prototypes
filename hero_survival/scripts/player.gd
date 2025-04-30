@@ -5,6 +5,15 @@ extends CharacterBody2D
 @onready var gun = $gun_pos.get_child(0)
 @onready var reload_bar = $ReloadBar
 @onready var player = get_parent().find_child("player")
+@onready var hud = get_node("/root/world/hud")
+
+var health = 100
+const speed = 300.0
+const JUMP_VELOCITY = -400.0
+var direction
+var inventory = []
+
+signal update_hud
 
 var guns = {
 "pistol": preload("res://scenes/weapons/pistol.tscn"),
@@ -18,11 +27,6 @@ var ammo = {
 	"minigun": {"total": 200, "remaining_bullets": 100}
 }
 
-var health = 100
-const speed = 300.0
-const JUMP_VELOCITY = -400.0
-var direction
-var inventory = []
 
 func _ready() -> void:
 	add_weapon_to_inventory("pistol")
@@ -32,6 +36,8 @@ func _ready() -> void:
 	gun_pos.get_child(0).set_owner(self)
 	gun = gun_pos.get_child(0)
 	gun.remaining_bullets = ammo[gun.name]["remaining_bullets"]
+	
+	connect("update_hud", Callable(hud, "update"))
 	
 func _process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
@@ -73,6 +79,7 @@ func add_ammo():
 	print(ammo[gun.name]["total"])
 	ammo[gun.name]["total"] += 50
 	print(ammo[gun.name]["total"])
+	emit_signal("update_hud") 
 	
 func _physics_process(delta: float) -> void:
 	if direction:

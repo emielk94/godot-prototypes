@@ -3,7 +3,6 @@ extends Gun
 @onready var sprite = $Sprite2D
 @onready var raycasts = [$R1,$R2,$R3,$R4,$R5]
 #@onready var particles = $CPUParticles2D
-@onready var fire_cd_timer = $fire_cd_timer
 var max_spread_degrees = 5
 # Called when the node enters the scene tree for the first time.
 func _ready(): # Replace with function body.
@@ -15,6 +14,8 @@ func _ready(): # Replace with function body.
 	reload_timer.wait_time = reload_time
 	fire_rate = 0.5
 	fire_cd_timer.wait_time = fire_rate
+	
+	connect("update_hud", Callable(hud, "update"))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var mouse_pos = get_global_mouse_position()
@@ -61,10 +62,12 @@ func shoot():
 					if collider && collider.is_in_group("enemies"):
 						collider.take_damage(damage)
 						collider.apply_knockback(knockback_str, owner.position - collider.position)
+						
+			emit_signal("update_hud") 
 		else:
 			reload()
 
-func play_audio():
+func play_audio(db=0):
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.global_position = global_position
 	audio_player.stream = preload("res://sfx/shotgun.wav")
