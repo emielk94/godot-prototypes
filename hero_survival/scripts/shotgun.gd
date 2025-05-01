@@ -2,10 +2,12 @@ extends Gun
 
 @onready var sprite = $Sprite2D
 @onready var raycasts = [$R1,$R2,$R3,$R4,$R5]
+
 #@onready var particles = $CPUParticles2D
 var max_spread_degrees = 5
 # Called when the node enters the scene tree for the first time.
-func _ready(): # Replace with function body.
+func _ready():
+	gun_sfx = preload("res://sfx/shotgun.wav") # Replace with function body.
 	range = 1000
 	damage = 15
 	knockback_str = 200
@@ -66,13 +68,6 @@ func shoot():
 			emit_signal("update_hud") 
 		else:
 			reload()
-
-func play_audio(db=0):
-	var audio_player = AudioStreamPlayer2D.new()
-	audio_player.global_position = global_position
-	audio_player.stream = preload("res://sfx/shotgun.wav")
-	get_tree().current_scene.add_child(audio_player)
-	audio_player.play()
 
 func _on_fire_cd_timer_timeout() -> void:
 	can_shoot = true # Replace with function body.

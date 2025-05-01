@@ -5,6 +5,7 @@ class_name Gun
 @onready var fire_cd_timer = $fire_cd
 @onready var raycast = $RayCast2D
 @onready var hud = get_node("/root/world/hud")
+@onready var gun_sfx = preload("res://sfx/gunshot.ogg")
 
 signal hud_update
 
@@ -20,7 +21,6 @@ var draw_offset : int = 0
 var damage : int = 50
 var range : float = 200
 var can_shoot : bool = true
-var gunshot = preload("res://sfx/gunshot.ogg")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,8 +60,7 @@ func reload():
 func play_audio(db=0):
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.global_position = global_position
-	audio_player.stream = gunshot
-	print(sfx_db)
+	audio_player.stream = gun_sfx
 	audio_player.volume_db = sfx_db
 	get_tree().current_scene.add_child(audio_player)
 	audio_player.play()

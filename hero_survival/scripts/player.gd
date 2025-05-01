@@ -49,7 +49,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("weapon_slot_1"):
 		equip_weapon(0)
 	if Input.is_action_just_pressed("weapon_slot_2"):
-		equip_weapon(2)
+		equip_weapon(1)
 	if Input.is_action_just_pressed("reload"):
 		reload()
 		

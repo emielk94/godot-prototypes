@@ -28,11 +28,11 @@ collision_mask = 2
 [node name="R5" type="RayCast2D" parent="."]
 collision_mask = 2
 
-[node name="fire_cd_timer" type="Timer" parent="."]
+[node name="fire_cd" type="Timer" parent="."]
 
 [node name="reload_timer" type="Timer" parent="."]
 one_shot = true
 script = ExtResource("3_yalno")
 
-[connection signal="timeout" from="fire_cd_timer" to="." method="_on_fire_cd_timer_timeout"]
+[connection signal="timeout" from="fire_cd" to="." method="_on_fire_cd_timer_timeout"]
 [connection signal="timeout" from="reload_timer" to="." method="_on_reload_timer_timeout"]
