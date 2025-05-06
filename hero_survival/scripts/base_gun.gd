@@ -7,8 +7,6 @@ class_name Gun
 @onready var hud = get_node("/root/world/hud")
 @onready var gun_sfx = preload("res://sfx/gunshot.ogg")
 
-signal hud_update
-
 signal update_hud
 
 var clip_size : int= 12
@@ -24,7 +22,7 @@ var can_shoot : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("update_hud", Callable(hud, "update"))
+	connect("update_hud", hud.update)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

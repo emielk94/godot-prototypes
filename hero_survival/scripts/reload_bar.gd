@@ -6,7 +6,7 @@ func _ready() -> void:
 
 func set_value(value):
 	$TextureProgressBar.value = value
-	if value >= 0:
+	if value > 0:
 		show()
 	else:
 		hide()

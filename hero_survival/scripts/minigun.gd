@@ -12,7 +12,7 @@ func _ready() -> void:
 	fire_rate = 0.05
 	fire_cd_timer.wait_time = fire_rate
 	
-	connect("update_hud", Callable(hud, "update"))
+	connect("update_hud", hud.update)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()

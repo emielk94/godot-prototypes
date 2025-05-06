@@ -37,7 +37,7 @@ func _ready() -> void:
 	gun = gun_pos.get_child(0)
 	gun.remaining_bullets = ammo[gun.name]["remaining_bullets"]
 	
-	connect("update_hud", Callable(hud, "update"))
+	connect("update_hud", hud.update)
 	
 func _process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
@@ -102,3 +102,5 @@ func equip_weapon(index):
 		gun_pos.add_child(new_weapon)
 		gun_pos.get_child(0).set_owner(self)
 		gun = gun_pos.get_child(0)
+		reload_bar.set_value(0)
+		emit_signal("update_hud")
