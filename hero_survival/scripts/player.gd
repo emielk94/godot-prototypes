@@ -8,9 +8,10 @@ extends CharacterBody2D
 @onready var hud = get_node("/root/world/hud")
 
 var health = 100
+var is_reloading = false
 const speed = 300.0
 const JUMP_VELOCITY = -400.0
-var direction
+var direction : Vector2
 var inventory = []
 
 signal update_hud
@@ -40,6 +41,7 @@ func _ready() -> void:
 	connect("update_hud", hud.update)
 	
 func _process(delta: float) -> void:
+	print(is_reloading)
 	var mouse_position = get_global_mouse_position()
 	var angle_to_mouse = (mouse_position - global_position).angle()
 	var offset = Vector2(gun.draw_offset, 0).rotated(angle_to_mouse)
@@ -50,6 +52,9 @@ func _process(delta: float) -> void:
 		equip_weapon(0)
 	if Input.is_action_just_pressed("weapon_slot_2"):
 		equip_weapon(1)
+	if Input.is_action_just_pressed("weapon_slot_3"):
+		equip_weapon(2)
+		
 	if Input.is_action_just_pressed("reload"):
 		reload()
 		
@@ -103,4 +108,5 @@ func equip_weapon(index):
 		gun_pos.get_child(0).set_owner(self)
 		gun = gun_pos.get_child(0)
 		reload_bar.set_value(0)
+		is_reloading = false
 		emit_signal("update_hud")

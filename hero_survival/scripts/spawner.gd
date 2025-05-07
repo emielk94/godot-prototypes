@@ -26,3 +26,7 @@ func spawn(x,y, isRandomPos, count, enemy_type):
 func get_random_direction_2d() -> Vector2:
 	var angle = randf() * TAU  # TAU is 2 * PI
 	return Vector2(cos(angle), sin(angle))
+
+
+func _on_spawn_timer_timeout() -> void:
+	spawn(0,0, true, 5, "ogre") # Replace with function body.

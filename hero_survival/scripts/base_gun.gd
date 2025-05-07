@@ -28,30 +28,34 @@ func _process(delta):
 	pass
 
 func shoot():
-	if can_shoot:
-		if remaining_bullets > 0:
-			remaining_bullets -= 1
-			owner.ammo[name]["remaining_bullets"] = remaining_bullets
-			can_shoot = false
-			fire_cd_timer.wait_time = fire_rate
-			fire_cd_timer.start()
-			
-			play_audio(sfx_db)
-			
-			if raycast.is_colliding():
-				var collider = raycast.get_collider()
-				if collider && collider.is_in_group("enemies"):
-					collider.take_damage(damage)
-					collider.apply_knockback(knockback_str,(owner.position - collider.position))
-					
-			emit_signal("update_hud") 
-		else:
-			reload()
+	if owner.is_reloading or !can_shoot:
+		return
+		
+	if remaining_bullets > 0:
+		remaining_bullets -= 1
+		owner.ammo[name]["remaining_bullets"] = remaining_bullets
+		can_shoot = false
+		fire_cd_timer.wait_time = fire_rate
+		fire_cd_timer.start()
+		
+		play_audio(sfx_db)
+		
+		if raycast.is_colliding():
+			var collider = raycast.get_collider()
+			if collider && collider.is_in_group("enemies"):
+				collider.take_damage(damage)
+				collider.apply_knockback(knockback_str,(owner.position - collider.position))
+				
+		emit_signal("update_hud") 
+	else:
+		reload()
 	
 func reload():
-	print(owner.ammo[name]["total"] != 0)
-	print(remaining_bullets != clip_size)
+	if owner.is_reloading:
+		return
+		
 	if owner.ammo[name]["total"] != 0 and remaining_bullets != clip_size:
+		owner.is_reloading = true
 		reload_timer.start()
 		print(reload_timer.owner.name)
 
@@ -64,6 +68,7 @@ func play_audio(db=0):
 	audio_player.play()
 	
 func finish_reload():
+	owner.is_reloading = false
 	owner.reload_bar.set_value(reload_timer.time_left)
 	owner.reload_bar.hide() # Replace with function body.
 	var bullet_count = clip_size - remaining_bullets
