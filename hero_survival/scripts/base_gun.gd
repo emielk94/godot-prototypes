@@ -83,3 +83,11 @@ func finish_reload():
 		owner.ammo[name]["remaining_bullets"] = remaining_bullets
 	
 	emit_signal("update_hud") 
+
+
+func _on_fire_cd_timeout() -> void:
+	can_shoot = true # Replace with function body.
+
+
+func _on_reload_timer_timeout() -> void:
+	finish_reload() # Replace with function body.

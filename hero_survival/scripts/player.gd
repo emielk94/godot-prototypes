@@ -19,20 +19,22 @@ signal update_hud
 var guns = {
 "pistol": preload("res://scenes/weapons/pistol.tscn"),
 "shotgun": preload("res://scenes/weapons/shotgun.tscn"),
-"minigun": preload("res://scenes/weapons/minigun.tscn")
+"minigun": preload("res://scenes/weapons/minigun.tscn"),
+"sniper": preload("res://scenes/weapons/sniper.tscn")
 }
 
 var ammo = {
 	"pistol": {"total": 20, "remaining_bullets": 12},
 	"shotgun": {"total": 20, "remaining_bullets": 5},
-	"minigun": {"total": 200, "remaining_bullets": 100}
+	"minigun": {"total": 200, "remaining_bullets": 100},
+	"sniper": {"total": 15, "remaining_bullets": 5}
 }
 
 
 func _ready() -> void:
 	add_weapon_to_inventory("pistol")
+	add_weapon_to_inventory("sniper")
 	add_weapon_to_inventory("shotgun")
-	add_weapon_to_inventory("minigun")
 	gun_pos.add_child(guns[inventory[0]].instantiate())
 	gun_pos.get_child(0).set_owner(self)
 	gun = gun_pos.get_child(0)
