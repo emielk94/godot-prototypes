@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var player = get_parent().find_child("player")
 @onready var hud = get_node("/root/world/hud")
 
+var reset = false
 var health = 100
 var is_reloading = false
 const speed = 300.0
@@ -18,6 +19,7 @@ signal update_hud
 
 var guns = {
 "pistol": preload("res://scenes/weapons/pistol.tscn"),
+"flamethrower": preload("res://scenes/weapons/flamethrower.tscn"),
 "shotgun": preload("res://scenes/weapons/shotgun.tscn"),
 "minigun": preload("res://scenes/weapons/minigun.tscn"),
 "sniper": preload("res://scenes/weapons/sniper.tscn")
@@ -25,6 +27,7 @@ var guns = {
 
 var ammo = {
 	"pistol": {"total": 20, "remaining_bullets": 12},
+	"flamethrower": {"total": 100, "remaining_bullets": 100},
 	"shotgun": {"total": 20, "remaining_bullets": 5},
 	"minigun": {"total": 200, "remaining_bullets": 100},
 	"sniper": {"total": 15, "remaining_bullets": 5}
@@ -33,6 +36,7 @@ var ammo = {
 
 func _ready() -> void:
 	add_weapon_to_inventory("pistol")
+	add_weapon_to_inventory("flamethrower")
 	add_weapon_to_inventory("sniper")
 	add_weapon_to_inventory("shotgun")
 	gun_pos.add_child(guns[inventory[0]].instantiate())
@@ -43,7 +47,6 @@ func _ready() -> void:
 	connect("update_hud", hud.update)
 	
 func _process(delta: float) -> void:
-	print(is_reloading)
 	var mouse_position = get_global_mouse_position()
 	var angle_to_mouse = (mouse_position - global_position).angle()
 	var offset = Vector2(gun.draw_offset, 0).rotated(angle_to_mouse)
@@ -58,7 +61,12 @@ func _process(delta: float) -> void:
 	direction = Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("shoot"):
 		gun.shoot()
-			
+	elif gun.particles != null:
+		if gun.particles.emitting == true:
+			gun.particles.emitting = false
+			gun.flamethrower_hitbox.monitoring = false
+			gun.dps_timer.stop()
+							
 	var mouse_pos = get_global_mouse_position()
 	
 	if direction:

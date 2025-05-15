@@ -59,7 +59,6 @@ func drop_item():
 func die():
 	var random_number = randi() % 3
 	if random_number == 0:
-		print("drop")
 		drop_item()
 	queue_free()
 	

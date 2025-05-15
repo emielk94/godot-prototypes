@@ -57,4 +57,9 @@ script = ExtResource("2_vgo5q")
 wait_time = 0.3
 autostart = true
 
+[node name="queue_free_timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [connection signal="timeout" from="damage_timer" to="." method="_on_damage_timer_timeout"]
+[connection signal="timeout" from="queue_free_timer" to="." method="_on_queue_free_timer_timeout"]

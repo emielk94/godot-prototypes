@@ -1,12 +1,15 @@
 extends Node2D
-class_name Gun
 
 @onready var reload_timer = $reload_timer
+@onready var sprite = $Sprite2D
+@onready var particles = $CPUParticles2D
 @onready var fire_cd_timer = $fire_cd
-@onready var raycast = $RayCast2D
-@onready var particles
 @onready var hud = get_node("/root/world/hud")
 @onready var gun_sfx = preload("res://sfx/gunshot.ogg")
+@onready var flamethrower_hitbox = $flamethrower_hitbox
+@onready var dps_timer = $dps_timer
+@onready var queue_free_timer = $queue_free_timer
+@onready var fire_scene = preload("res://scenes/fire.tscn")
 
 signal update_hud
 
@@ -26,12 +29,26 @@ func _ready():
 	connect("update_hud", hud.update)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	var mouse_pos = get_global_mouse_position()
+	var direction = (mouse_pos - global_position).normalized()
+	
+	if ((mouse_pos - global_position).length() > 30):
+		rotation = (mouse_pos - global_position).angle()
+		if mouse_pos.x > owner.global_position.x:
+			sprite.flip_v = false
+		else:
+			sprite.flip_v = true
 
 func shoot():
 	if owner.is_reloading or !can_shoot:
 		return
 		
+	particles.emitting = true
+	if !flamethrower_hitbox.monitoring:
+		flamethrower_hitbox.monitoring = true
+		dps_timer.start() 
+	
+	
 	if remaining_bullets > 0:
 		remaining_bullets -= 1
 		owner.ammo[name]["remaining_bullets"] = remaining_bullets
@@ -39,17 +56,13 @@ func shoot():
 		fire_cd_timer.wait_time = fire_rate
 		fire_cd_timer.start()
 		
-		play_audio(sfx_db)
-		
-		if raycast.is_colliding():
-			var collider = raycast.get_collider()
-			if collider && collider.is_in_group("enemies"):
-				collider.take_damage(damage)
-				collider.apply_knockback(knockback_str,(owner.position - collider.position))
+		#play_audio(sfx_db)
 				
 		emit_signal("update_hud") 
 	else:
 		reload()
+		
+	await get_tree().process_frame
 	
 func reload():
 	if owner.is_reloading:
@@ -89,6 +102,19 @@ func finish_reload():
 func _on_fire_cd_timeout() -> void:
 	can_shoot = true # Replace with function body.
 
-
 func _on_reload_timer_timeout() -> void:
 	finish_reload() # Replace with function body.
+
+func _on_dps_timer_timeout() -> void:
+	var bodies = flamethrower_hitbox.get_overlapping_bodies()
+	for body in bodies:
+		if body.has_node("fire"):
+			pass
+		else:
+			var fire_instance = fire_scene.instantiate()
+			body.add_child(fire_instance)
+			var fire_node = body.get_node("fire")
+			fire_node.set_owner(body)
+
+			
+		body.take_damage(4) # Replace with function body.

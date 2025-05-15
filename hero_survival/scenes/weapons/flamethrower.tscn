@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://r0raxefb28b1"]
+
+[ext_resource type="Script" path="res://scenes/weapons/flamethrower.gd" id="1_duekv"]
+[ext_resource type="Texture2D" uid="uid://cdxp5n0glh7r7" path="res://img/weapons.png" id="1_j5dlh"]
+[ext_resource type="Script" path="res://scenes/weapons/reload_timer.gd" id="2_n8ens"]
+
+[sub_resource type="Gradient" id="Gradient_mdvjy"]
+offsets = PackedFloat32Array(0, 0.513333, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ogjqt"]
+radius = 70.0
+height = 386.0
+
+[node name="flamethrower" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_duekv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_j5dlh")
+region_enabled = true
+region_rect = Rect2(108.51, 65.275, 58.2088, 31.7205)
+
+[node name="reload_timer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("2_n8ens")
+
+[node name="fire_cd" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 0.6
+randomness = 1.0
+spread = 8.64
+gravity = Vector2(0, 0)
+initial_velocity_min = 645.81
+initial_velocity_max = 645.81
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_mdvjy")
+
+[node name="flamethrower_hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="flamethrower_hitbox"]
+position = Vector2(216, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ogjqt")
+
+[node name="dps_timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="fire_cd" to="." method="_on_fire_cd_timeout"]
+[connection signal="timeout" from="dps_timer" to="." method="_on_dps_timer_timeout"]

@@ -16,7 +16,6 @@ func spawn(x,y, isRandomPos, count, enemy_type):
 		
 		if isRandomPos:
 			var direction = get_random_direction_2d() 
-			print(direction)
 			enemy_instance.position = player.position + direction * 300
 		else:
 			enemy_instance.position = Vector2(x, y) 
