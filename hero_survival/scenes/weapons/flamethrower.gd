@@ -13,11 +13,11 @@ extends Node2D
 
 signal update_hud
 
-var clip_size : int= 12
+var clip_size : int= 100
 var sfx_db = 0
 var remaining_bullets: int=0
 var reload_time : int = 3
-var fire_rate : float = 0.5
+var fire_rate : float = 0.05
 var knockback_str : float = 0
 var draw_offset : int = 0
 var damage : int = 50
@@ -48,7 +48,6 @@ func shoot():
 		flamethrower_hitbox.monitoring = true
 		dps_timer.start() 
 	
-	
 	if remaining_bullets > 0:
 		remaining_bullets -= 1
 		owner.ammo[name]["remaining_bullets"] = remaining_bullets
@@ -69,6 +68,7 @@ func reload():
 		return
 		
 	if owner.ammo[name]["total"] != 0 and remaining_bullets != clip_size:
+		particles.emitting = false
 		owner.is_reloading = true
 		reload_timer.start()
 		print(reload_timer.owner.name)

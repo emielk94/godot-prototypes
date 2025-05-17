@@ -80,12 +80,10 @@ func _process(delta: float) -> void:
 		player_sprite.flip_h = false
 
 func handle_weapon_switch():
-	if Input.is_action_just_pressed("weapon_slot_1"):
-		equip_weapon(0)
-	if Input.is_action_just_pressed("weapon_slot_2"):
-		equip_weapon(1)
-	if Input.is_action_just_pressed("weapon_slot_3"):
-		equip_weapon(2)
+	for i in range(3): # Adjust the range if you have more slots
+		if Input.is_action_just_pressed("weapon_slot_" + str(i + 1)):
+			equip_weapon(i)
+			
 func add_weapon_to_inventory(name):
 	inventory.append(name)
 	
