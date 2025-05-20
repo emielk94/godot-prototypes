@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbmpywflp62kl"]
+
+[ext_resource type="Script" path="res://grenade.gd" id="1_uq3l4"]
+[ext_resource type="Texture2D" uid="uid://cdxp5n0glh7r7" path="res://img/weapons.png" id="1_vofyk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sds0n"]
+radius = 23.0217
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p8bo2"]
+radius = 5.0
+height = 12.0
+
+[sub_resource type="Gradient" id="Gradient_fg2e3"]
+colors = PackedColorArray(1, 0.309804, 0, 1, 1, 1, 0, 0)
+
+[node name="grenade" type="CharacterBody2D"]
+script = ExtResource("1_uq3l4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vofyk")
+region_enabled = true
+region_rect = Rect2(34.7215, 4.66926, 11.5909, 14.679)
+
+[node name="explosion_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="explosion_hitbox"]
+shape = SubResource("CircleShape2D_sds0n")
+
+[node name="explode_timer" type="Timer" parent="."]
+
+[node name="delete_timer" type="Timer" parent="."]
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_p8bo2")
+
+[node name="particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.5
+explosiveness = 1.0
+randomness = 0.47
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+angle_max = 720.0
+color_ramp = SubResource("Gradient_fg2e3")
+
+[connection signal="timeout" from="explode_timer" to="." method="_on_explode_timer_timeout"]
