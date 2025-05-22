@@ -1,6 +1,7 @@
 extends Node2D
 
 var enemy_scenes = {"ogre": preload("res://scenes/enemies/ogre.tscn")}
+
 @onready var player = owner.find_child("player")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

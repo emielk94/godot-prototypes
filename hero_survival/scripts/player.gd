@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var reload_bar = $ReloadBar
 @onready var player = get_parent().find_child("player")
 @onready var hud = get_node("/root/world/hud")
+@onready var grenade_scene = preload("res://grenade.tscn")
 
 var reset = false
 var health = 100
@@ -57,6 +58,10 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("reload"):
 		reload()
+	
+	if Input.is_action_just_pressed("grenade_slot"):
+		throw_grenade(mouse_position - global_position)
+		
 		
 	direction = Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("shoot"):
@@ -89,7 +94,14 @@ func add_weapon_to_inventory(name):
 	
 func reload():
 	await gun.reload()
-
+	
+func throw_grenade(dir):
+	var grenade_instance = grenade_scene.instantiate()
+	grenade_instance.position = position
+	grenade_instance.direction = dir
+	
+	get_tree().current_scene.add_child(grenade_instance)
+	
 func add_ammo():
 	print(ammo[gun.name]["total"])
 	ammo[gun.name]["total"] += 50
