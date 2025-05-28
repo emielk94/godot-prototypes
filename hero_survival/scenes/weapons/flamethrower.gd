@@ -41,6 +41,8 @@ func _process(delta):
 
 func shoot():
 	if owner.is_reloading or !can_shoot:
+		if owner.is_reloading:
+			disable_flamethrower()
 		return
 		
 	particles.emitting = true
@@ -50,6 +52,7 @@ func shoot():
 	
 	if remaining_bullets > 0:
 		remaining_bullets -= 1
+		print(owner.ammo[name]["remaining_bullets"])
 		owner.ammo[name]["remaining_bullets"] = remaining_bullets
 		can_shoot = false
 		fire_cd_timer.wait_time = fire_rate
@@ -59,10 +62,16 @@ func shoot():
 				
 		emit_signal("update_hud") 
 	else:
+		disable_flamethrower()
 		reload()
 		
 	await get_tree().process_frame
-	
+
+func disable_flamethrower():
+	if flamethrower_hitbox.monitoring:
+			flamethrower_hitbox.monitoring = false
+			particles.emitting = false
+			
 func reload():
 	if owner.is_reloading:
 		return

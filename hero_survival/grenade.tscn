@@ -4,11 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cdxp5n0glh7r7" path="res://img/weapons.png" id="1_vofyk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sds0n"]
-radius = 23.0217
+radius = 138.232
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p8bo2"]
-radius = 5.0
-height = 12.0
+height = 20.0
 
 [sub_resource type="Gradient" id="Gradient_fg2e3"]
 colors = PackedColorArray(1, 0.309804, 0, 1, 1, 1, 0, 0)
@@ -25,6 +24,8 @@ region_enabled = true
 region_rect = Rect2(34.7215, 4.66926, 11.5909, 14.679)
 
 [node name="explosion_hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="explosion_hitbox"]
 shape = SubResource("CircleShape2D_sds0n")
