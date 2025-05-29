@@ -20,7 +20,7 @@ var knockback_decay_speed = 30
 var knockback_direction : Vector2
 
 func _process(delta):
-	if player:
+	if player != null:
 		direction = player.global_position - global_position
 	
 	if direction.x < -20:

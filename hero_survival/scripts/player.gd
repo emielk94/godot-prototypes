@@ -10,6 +10,7 @@ extends CharacterBody2D
 
 var reset = false
 var health = 100
+var is_dead = false
 var is_reloading = false
 const speed = 300.0
 const JUMP_VELOCITY = -400.0
@@ -48,41 +49,42 @@ func _ready() -> void:
 	connect("update_hud", hud.update)
 	
 func _process(delta: float) -> void:
-	var mouse_position = get_global_mouse_position()
-	var angle_to_mouse = (mouse_position - global_position).angle()
-	var offset = Vector2(gun.draw_offset, 0).rotated(angle_to_mouse)
-	
-	gun_pos.global_position = global_position + offset
-	
-	handle_weapon_switch()
-		
-	if Input.is_action_just_pressed("reload"):
-		reload()
-	
-	if Input.is_action_just_pressed("grenade_slot"):
-		throw_grenade(mouse_position - global_position)
-		
-		
-	direction = Input.get_vector("left","right","up","down")
-	if Input.is_action_pressed("shoot"):
-		gun.shoot()
-	elif gun.particles != null:
-		if gun.particles.emitting == true:
-			gun.particles.emitting = false
-			gun.flamethrower_hitbox.monitoring = false
-			gun.dps_timer.stop()
-							
-	var mouse_pos = get_global_mouse_position()
-	
-	if direction:
-		player_sprite.play("walk")
-	else:
-		player_sprite.play("idle")
-		
-	if mouse_pos.x > global_position.x:
-		player_sprite.flip_h = true
-	else:
-		player_sprite.flip_h = false
+	if !is_dead:
+			var mouse_position = get_global_mouse_position()
+			var angle_to_mouse = (mouse_position - global_position).angle()
+			var offset = Vector2(gun.draw_offset, 0).rotated(angle_to_mouse)
+			
+			gun_pos.global_position = global_position + offset
+			
+			handle_weapon_switch()
+				
+			if Input.is_action_just_pressed("reload"):
+				reload()
+			
+			if Input.is_action_just_pressed("grenade_slot"):
+				throw_grenade(mouse_position - global_position)
+				
+				
+			direction = Input.get_vector("left","right","up","down")
+			if Input.is_action_pressed("shoot"):
+				gun.shoot()
+			elif gun.particles != null:
+				if gun.particles.emitting == true:
+					gun.particles.emitting = false
+					gun.flamethrower_hitbox.monitoring = false
+					gun.dps_timer.stop()
+									
+			var mouse_pos = get_global_mouse_position()
+			
+			if direction:
+				player_sprite.play("walk")
+			else:
+				player_sprite.play("idle")
+				
+			if mouse_pos.x > global_position.x:
+				player_sprite.flip_h = true
+			else:
+				player_sprite.flip_h = false
 
 func handle_weapon_switch():
 	for i in range(3): # Adjust the range if you have more slots
@@ -117,8 +119,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func take_damage(damage):
-	health -= damage
-	print(health)
+	if !is_dead:
+		health -= damage
+		if health <= 0:
+			die()
+	
+func die():
+	is_dead = true
+	var tween = create_tween()
+	
+	tween.tween_property(self, "modulate:a", 0, 0.5)
+	await tween.finished
+	queue_free()
 	
 func equip_weapon(index):
 	if index <= inventory.size() -1:
