@@ -132,6 +132,8 @@ func die():
 	await tween.finished
 	queue_free()
 	
+	get_tree().reload_current_scene()
+	
 func equip_weapon(index):
 	if index <= inventory.size() -1:
 		gun_pos.get_child(0).queue_free()

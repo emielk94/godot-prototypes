@@ -4,25 +4,25 @@
 [ext_resource type="Script" path="res://scripts/enemies/ogre.gd" id="1_yqss7"]
 [ext_resource type="Texture2D" uid="uid://cw0p32b581via" path="res://sprites/enemies/ogre/Ogre_attack.png" id="2_vgby1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s44jd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqhb0"]
 atlas = ExtResource("2_vgby1")
-region = Rect2(0, 128, 128, 128)
+region = Rect2(0, 128, 127, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kwm15"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7cjy"]
 atlas = ExtResource("2_vgby1")
-region = Rect2(128, 128, 128, 128)
+region = Rect2(127, 128, 127, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j75xv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_c72mn"]
 atlas = ExtResource("2_vgby1")
-region = Rect2(256, 128, 128, 128)
+region = Rect2(254, 128, 127, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6kn6l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vto3x"]
 atlas = ExtResource("2_vgby1")
-region = Rect2(384, 128, 128, 128)
+region = Rect2(381, 128, 127, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ar4o7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7s73"]
 atlas = ExtResource("2_vgby1")
-region = Rect2(512, 128, 128, 128)
+region = Rect2(508, 128, 127, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cahga"]
 atlas = ExtResource("1_fiwke")
@@ -44,19 +44,19 @@ region = Rect2(192, 68, 64, 62)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s44jd")
+"texture": SubResource("AtlasTexture_eqhb0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kwm15")
+"texture": SubResource("AtlasTexture_k7cjy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j75xv")
+"texture": SubResource("AtlasTexture_c72mn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6kn6l")
+"texture": SubResource("AtlasTexture_vto3x")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ar4o7")
+"texture": SubResource("AtlasTexture_b7s73")
 }],
 "loop": false,
 "name": &"attack",
