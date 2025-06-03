@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr0u2f2ncevx6"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_u5guc"]
+[ext_resource type="AudioStream" uid="uid://rkcmcnwdj8jv" path="res://sfx/countdown.mp3" id="2_7th4a"]
+[ext_resource type="AudioStream" uid="uid://u4v0cpkovfs5" path="res://sfx/bell.mp3" id="3_c0tql"]
+
+[sub_resource type="Theme" id="Theme_n55ei"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_tod7y"]
+default_font_size = 60
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_u5guc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="next_button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = 44.0
+offset_right = -42.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Next"
+
+[node name="phrase_label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -61.0
+offset_right = 118.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_n55ei")
+text = "asgagasgasgs"
+
+[node name="timer_label" type="Label" parent="CanvasLayer"]
+offset_left = 556.0
+offset_top = 142.0
+offset_right = 596.0
+offset_bottom = 184.0
+theme = SubResource("Theme_tod7y")
+text = "15"
+horizontal_alignment = 1
+
+[node name="start_button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 82.0
+offset_top = 46.0
+offset_right = 252.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Start"
+
+[node name="team1_label" type="Label" parent="CanvasLayer"]
+offset_top = 2.0
+offset_right = 74.0
+offset_bottom = 25.0
+text = "Team 1: 0"
+
+[node name="team2_label" type="Label" parent="CanvasLayer"]
+offset_top = 37.0
+offset_right = 74.0
+offset_bottom = 60.0
+text = "Team 2: 0"
+
+[node name="team1_button" type="Button" parent="CanvasLayer"]
+offset_left = 80.0
+offset_right = 112.0
+offset_bottom = 31.0
+text = "+"
+
+[node name="team2_button" type="Button" parent="CanvasLayer"]
+offset_left = 80.0
+offset_top = 34.0
+offset_right = 112.0
+offset_bottom = 65.0
+text = "+"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="countdown" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_7th4a")
+
+[node name="countdown_finished" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_c0tql")
+
+[connection signal="pressed" from="CanvasLayer/next_button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/start_button" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/team1_button" to="." method="_on_team_1_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/team2_button" to="." method="_on_team_2_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
